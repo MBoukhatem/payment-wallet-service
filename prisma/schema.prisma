@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Wallet {
+  id           String          @id @default(cuid())
+  userId       String          @unique
+  balance      Decimal         @default(0) @db.Decimal(12, 2)
+  updatedAt    DateTime        @updatedAt
+  transactions Transaction[]   @relation("SenderWallet")
+  received     Transaction[]   @relation("ReceiverWallet")
+  deposits     StripeDeposit[]
+}
+
+model Transaction {
+  id               String            @id @default(cuid())
+  senderWalletId   String
+  receiverWalletId String
+  amount           Decimal           @db.Decimal(12, 2)
+  status           TransactionStatus @default(PENDING)
+  createdAt        DateTime          @default(now())
+  senderWallet     Wallet            @relation("SenderWallet", fields: [senderWalletId], references: [id])
+  receiverWallet   Wallet            @relation("ReceiverWallet", fields: [receiverWalletId], references: [id])
+}
+
+model StripeDeposit {
+  id                    String        @id @default(cuid())
+  walletId              String
+  stripePaymentIntentId String        @unique
+  amount                Decimal       @db.Decimal(12, 2)
+  status                DepositStatus @default(PENDING)
+  createdAt             DateTime      @default(now())
+  wallet                Wallet        @relation(fields: [walletId], references: [id])
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum DepositStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+}

@@ -1,0 +1,10 @@
+# Gitignore minimal
+# Actuellement, aucun element de ta liste d'exemple n'existe dans le projet.
+
+
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local

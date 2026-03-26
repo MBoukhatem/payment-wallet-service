@@ -1,0 +1,34 @@
+{
+  "name": "mini-paypal-payment",
+  "version": "1.0.0",
+  "description": "Payment, wallet and transaction service for Mini-PayPal",
+  "main": "src/app.js",
+  "engines": {
+    "node": ">=24.14.0"
+  },
+  "scripts": {
+    "start": "node --env-file=.env src/app.js",
+    "dev": "nodemon --env-file=.env src/app.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.2",
+    "pg": "^8.13.3",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "stripe": "^20.4.1",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.29.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1",
+    "prisma": "^6.19.2"
+  }
+}
