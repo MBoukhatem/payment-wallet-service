@@ -6,5 +6,6 @@ COPY prisma ./prisma
 RUN npx prisma generate
 COPY . .
 RUN chmod +x entrypoint.sh
+RUN sed -i 's/\r//' entrypoint.sh
 EXPOSE 3003
 CMD ["sh", "entrypoint.sh"]
